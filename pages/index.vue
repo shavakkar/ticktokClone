@@ -8,4 +8,5 @@
 
 <script setup>
 import MainLayout from "~/layouts/MainLayout.vue";
+import PostMain from "~/components/PostMain.vue";
 </script>

@@ -1,5 +1,5 @@
 <script setup>
-// import MenuItem from "./MenuItem.vue";
+import MenuItem from "./MenuItem.vue";
 const route = useRoute();
 </script>
 <template>
@@ -51,7 +51,7 @@ const route = useRoute();
         See more
       </button>
 
-      <div class="lb:block hidden border-b lg:ml-2 mt-2"></div>
+      <div class="lg:block hidden border-b lg:ml-2 mt-2"></div>
 
       <div class="lg:block hidden text-[11px] text-gray-500">
         <div class="pt-4 px-2">
