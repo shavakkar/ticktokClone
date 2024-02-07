@@ -147,6 +147,7 @@
 </template>
 
 <script setup>
+import { watch } from "vue";
 import UploadLayout from "~/layouts/UploadLayout.vue";
 
 let file = ref(null);
@@ -156,6 +157,17 @@ let caption = ref("");
 let fileData = ref(null);
 let errors = ref(null);
 let isUploading = ref(false);
+
+watch(
+  () => caption.value,
+  (caption) => {
+    if (caption.length >= 150) {
+      errorType.value = "caption";
+      return;
+    }
+    errorType.value = null;
+  }
+);
 
 const onChange = () => {
   fileDisplay.value = URL.createObjectURL(file.value.files[0]);
