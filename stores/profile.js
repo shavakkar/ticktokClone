@@ -14,4 +14,5 @@ export const useProfileStore = defineStore('profile',{
     actions: {
         // 
     },
+    persist: true,
 })
