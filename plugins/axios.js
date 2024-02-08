@@ -1,15 +1,15 @@
 import axios from "axios";
 
-export default defineNuxtPlugin(NuxtApp) = () => {
+export default defineNuxtPlugin((NuxtApp) => {
     
     axios.defaults.withCredentials = true;
-    axios.defaults.baseURL = 'http://localhost:8000';
+    axios.defaults.baseURL = 'http://localhost:3000';
     
     return {
         provide:{
             axio:axios
         }
     }
-}
+})
 
 // const {$userStore} = useNuxtApp();

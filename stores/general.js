@@ -1,17 +1,17 @@
 import { defineStore } from "pinia";
 
-export const useGeneraltore = defineStore('general',{
+export const useGeneralStore = defineStore('general',{
     state: () => ({ 
         isLoginOpen: false,
         isEditProfileOpen: false,
         selectedPost: null,
         ids: null,
-        isBackUrl: '/',
+        isBackUrl: "/",
         posts: null,
         suggested: null,
         following: null,
      }),
     actions: {
         // 
-    }
+    },
 })

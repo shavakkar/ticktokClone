@@ -1,4 +1,5 @@
 <script setup>
+const { $userStore, $generalStore } = useNuxtApp();
 const route = useRoute();
 let showMenu = ref(false);
 </script>
@@ -38,7 +39,7 @@ let showMenu = ref(false);
           <span class="px-2 font-medium text-[15px]">Upload</span>
         </button>
 
-        <div v-if="false" class="flex items-center">
+        <div v-if="!$userStore.id" class="flex items-center">
           <button
             class="flex items-center bg-[#f02c56] text-white border rounded-md px-3 py-[6px]"
           >

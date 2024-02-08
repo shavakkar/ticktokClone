@@ -2,7 +2,7 @@ import { useUserStore } from "~/stores/user";
 import { useProfileStore } from "~/stores/profile";
 import { useGeneralStore } from "~/stores/general";
 
-export default defineNuxtPlugin(NuxtApp) = () => {
+export default defineNuxtPlugin((NuxtApp) => {
     return {
         provide:{
             userStore: useUserStore(),
@@ -10,6 +10,6 @@ export default defineNuxtPlugin(NuxtApp) = () => {
             generalStore: useGeneralStore(),
         }
     }
-}
+})
 
-const {$userStore} = useNuxtApp();
+// const {$userStore} = useNuxtApp();
