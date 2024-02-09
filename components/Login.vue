@@ -20,20 +20,35 @@
     />
   </div>
   <div class="px-6 text-[12px] text-gray-600">Forget Password?</div>
-
+  <!-- :disabled="!email || !password"
+      :class="!email || !password ? 'bg-gray-200' : 'bg-[#f02c56]'" -->
   <div class="px-6 pb-2 mt-6">
     <button
-      :disabled="!email || !password"
-      :class="!email || !password ? 'bg-gray-200' : 'bg-[#f02c56]'"
       @click="($event) => login()"
-      class="w-full text-[17px] font-semibold text-white py-3 rounded-sm"
+      class="w-full text-[17px] font-semibold text-white py-3 rounded-sm bg-[#f02c56]"
     >
       Log in
     </button>
   </div>
 </template>
 <script setup>
+const { $axios } = useNuxtApp();
+
 let email = ref(null);
 let password = ref(null);
 let errors = ref(null);
+
+const login = async () => {
+  try {
+    await $axios.get("/sanctum/csrf-cookie");
+    await $axios.post("/login", {
+      email: "test@gmail.com",
+      password: "testtest",
+    });
+    let res = await $axios.get("/api/user");
+    console.log(res);
+  } catch (error) {
+    console.log(error);
+  }
+};
 </script>
