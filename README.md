@@ -69,8 +69,8 @@ Images
 <div>
   <img src="https://github.com/shavakkar/ticktokClone/blob/main/IgnoreFolder/sol6.png" />
   <p>Under Preview... the Credentials can be seen...</p><br/>
-  <p>email: test@gmail.com</p><br/>
-  <p>password: testtest</p><br/>
+  <p>email: test@gmail.com</p>
+  <p>password: testtest</p>
 </div>
 <br/>
 <br/>
