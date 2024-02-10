@@ -13,7 +13,7 @@ export const useUserStore = defineStore('user',{
      }),
     actions: {
         async getTokens(){
-            await $axios.get('/sanctum/scrf-cookie');
+            await $axios.get('/sanctum/csrf-cookie');
         },
 
         async login(email, password){

@@ -8,7 +8,7 @@
       v-model:input="email"
       inputType="email"
       :autoFocus="true"
-      :input="errors && errors.email ? errors.email[0] : ''"
+      :error="errors && errors.email ? errors.email[0] : ''"
     />
   </div>
 
@@ -47,7 +47,7 @@ const login = async () => {
     await $userStore.getUser();
 
     $generalStore.isLoginOpen = false;
-    console.log(res);
+    // console.log(res);
   } catch (error) {
     errors.value = error.response.data.errors;
   }

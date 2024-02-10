@@ -7,7 +7,7 @@
       v-model:input="name"
       inputType="text"
       :autoFocus="true"
-      :input="errors && errors.name ? errors.name[0] : ''"
+      :error="errors && errors.name ? errors.name[0] : ''"
     />
   </div>
 
@@ -16,7 +16,7 @@
       placeholder="Email address"
       v-model:input="email"
       inputType="email"
-      :input="errors && errors.email ? errors.email[0] : ''"
+      :error="errors && errors.email ? errors.email[0] : ''"
     />
   </div>
   <div class="px-6 pb-2">
@@ -24,7 +24,7 @@
       placeholder="Password"
       v-model:input="password"
       inputType="password"
-      :input="errors && errors.password ? errors.password[0] : ''"
+      :error="errors && errors.password ? errors.password[0] : ''"
     />
   </div>
   <div class="px-6 pb-2">
@@ -32,7 +32,7 @@
       placeholder="Confirm password"
       v-model:input="confirmPassword"
       inputType="password"
-      :input="errors && errors.confirmPassword ? errors.confirmPassword[0] : ''"
+      :error="errors && errors.confirmPassword ? errors.confirmPassword[0] : ''"
     />
   </div>
   <div class="px-6 text-[12px] text-gray-600">Forget Password?</div>
@@ -69,7 +69,7 @@ const register = async () => {
       name.value,
       email.value,
       password.value,
-      confirmPassword
+      confirmPassword.value
     );
     await $userStore.getUser();
     $generalStore.isLoginOpen = false;
