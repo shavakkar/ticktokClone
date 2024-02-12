@@ -48,7 +48,7 @@
         v-if="$generalStore.following"
         v-for="fol in $generalStore.following"
       >
-        <div @click="isLoggedIn(sug)" class="cursor-pointer">
+        <div @click="isLoggedIn(fol)" class="cursor-pointer">
           <MenuItemFollow :user="fol" />
         </div>
       </div>
@@ -84,7 +84,7 @@ const route = useRoute();
 const router = useRouter();
 
 const isLoggedIn = (fol) => {
-  if (!useUserStore.id) {
+  if (!$userStore.id) {
     $generalStore.isLoginOpen = true;
     return;
   }

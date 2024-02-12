@@ -46,6 +46,9 @@ const login = async () => {
     await $userStore.login(email.value, password.value);
     await $userStore.getUser();
 
+    await $generalStore.getRandomUsers("suggested");
+    await $generalStore.getRandomUsers("following");
+
     $generalStore.isLoginOpen = false;
     // console.log(res);
   } catch (error) {

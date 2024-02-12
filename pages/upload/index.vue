@@ -176,6 +176,8 @@ import UploadLayout from "~/layouts/UploadLayout.vue";
 const { $userStore } = useNuxtApp();
 const router = useRouter();
 
+definePageMeta({ middleware: "auth" });
+
 let file = ref(null);
 let fileDisplay = ref(null);
 let errorType = ref(null);
