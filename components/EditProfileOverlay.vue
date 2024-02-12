@@ -33,11 +33,7 @@
 
             <div class="flex items-center justify-center sm:-mt-6">
               <label for="image" class="relative cursor-pointer">
-                <img
-                  class="rounded-full"
-                  width="95"
-                  src="https://picsum.photos/id/8/300/320"
-                />
+                <img class="rounded-full" width="95" :src="userImage" />
                 <div
                   class="absolute bottom-0 right-0 rounded-full bg-white shadow-xl border p-1 border-gray-300 inline-block w-[32px]"
                 >
@@ -139,6 +135,24 @@
           </button>
 
           <button
+            :disabled="!isUpdated"
+            @click="($event) => updateUserInfo()"
+            :class="!isUpdated ? 'bg-gray-200' : 'bg-[#f02c56]'"
+            class="flex items-center bg-[#f02c56] text-white border rounded-md ml-3 px-3 py-[6px]"
+          >
+            <span>Apply</span>
+          </button>
+        </div>
+
+        <div id="CropperButtons" v-else class="flex items-center justify-end">
+          <button
+            @click="($event) => (UploadedImage = null)"
+            class="flex items-center border rounded-sm px-3 py-[6px] hover:bg-gray-100"
+          >
+            <span class="px-2 font-medium text-[15px]">Cancel</span>
+          </button>
+
+          <button
             @click="($event) => cropAndUpdateImage()"
             class="flex items-center bg-[#f02c56] text-white border rounded-md ml-3 px-3 py-[6px]"
           >
@@ -157,6 +171,8 @@ import "vue-advanced-cropper/dist/style.css";
 import { storeToRefs } from "pinia";
 const { $userStore, $generalStore, $profileStore } = useNuxtApp();
 const { name, bio, image } = storeToRefs($userStore);
+
+const route = useRoute();
 
 onMounted(() => {
   userName.value = name.value;
@@ -177,6 +193,48 @@ const getUploadedImage = (e) => {
   UploadedImage.value = URL.createObjectURL(file.value);
 };
 
+const cropAndUpdateImage = async () => {
+  const { coordinates } = cropper.value.getResult();
+  let data = new FormData();
+
+  data.append("image", file.value || "");
+  data.append("height", coordinates.height || "");
+  data.append("width", coordinates.width || "");
+  data.append("left", coordinates.left || "");
+  data.append("top", coordinates.top || "");
+
+  try {
+    await $userStore.updateUserImage(data);
+    await $userStore.getUser();
+    await $profileStore.getProfile(route.params.id);
+
+    $generalStore.updateSideMenuImage($generalStore.suggested, $userStore);
+    $generalStore.updateSideMenuImage($generalStore.following, $userStore);
+
+    userImage.value = image.value;
+    UploadedImage.value = null;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const updateUserInfo = async () => {
+  try {
+    await $userStore.updateUser(userName.value, userBio.value);
+    await $userStore.getUser();
+    await $profileStore.getProfile(route.params.id);
+
+    userName.value = name.value;
+    userBio.value = bio.value;
+
+    setTimeout(() => {
+      $generalStore.isEditProfileOpen = false;
+    }, 100);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 watch(
   () => userName.value,
   () => {
@@ -191,7 +249,7 @@ watch(
 watch(
   () => userBio.value,
   () => {
-    if (!userBio.value || userBio.value.length < 1) {
+    if (!userName.value || userBio.value.length < 1) {
       isUpdated.value = false;
     } else {
       isUpdated.value = true;

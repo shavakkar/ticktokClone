@@ -1,7 +1,3 @@
-<script setup>
-import MenuItem from "./MenuItem.vue";
-const route = useRoute();
-</script>
 <template>
   <div
     if="SideNavMain"
@@ -25,8 +21,13 @@ const route = useRoute();
 
       <div class="lg:hidden block pt-3"></div>
 
-      <div class="cursor-pointer">
-        <MenuItemFollow />
+      <div
+        v-if="$generalStore.suggested"
+        v-for="sug in $generalStore.suggested"
+      >
+        <div @click="isLoggedIn(sug)" class="cursor-pointer">
+          <MenuItemFollow :user="sug" />
+        </div>
       </div>
 
       <button class="lg:block hidden text-[#f02c56] pt-1.5 pl-2 text-[13px]">
@@ -41,10 +42,15 @@ const route = useRoute();
         Following accounts
       </div>
 
-      <div class="border-b lg:ml-2 mt-2"></div>
+      <div class="lg:hidden block pt-3"></div>
 
-      <div class="cursor-pointer">
-        <MenuItemFollow />
+      <div
+        v-if="$generalStore.following"
+        v-for="fol in $generalStore.following"
+      >
+        <div @click="isLoggedIn(sug)" class="cursor-pointer">
+          <MenuItemFollow :user="fol" />
+        </div>
       </div>
 
       <button class="lg:block hidden text-[#f02c56] pt-1.5 pl-2 text-[13px]">
@@ -71,3 +77,17 @@ const route = useRoute();
     </div>
   </div>
 </template>
+<script setup>
+import MenuItem from "./MenuItem.vue";
+const { $generalStore, $userStore } = useNuxtApp();
+const route = useRoute();
+const router = useRouter();
+
+const isLoggedIn = (fol) => {
+  if (!useUserStore.id) {
+    $generalStore.isLoginOpen = true;
+    return;
+  }
+  setTimeout(() => router.push(`/profile/${fol.id}`), 200);
+};
+</script>
